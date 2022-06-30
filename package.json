@@ -1,6 +1,6 @@
 {
   "name": "nodejs-webapp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NB: \r       - Atlas connectivity is not available from the office network\r       - If we are behind a VPN, Mongo Atlas cloud is not available as well",
   "main": "app.js",
   "scripts": {
