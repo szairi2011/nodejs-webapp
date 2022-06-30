@@ -44,3 +44,17 @@
   2. git commit -m "..."
   3. npm version patch --> Instead of going to package.json, this will automatically increment the semantic version for us in this case it will update the patch part. we can specify minor or major instead of minor depends on the nature of the changes that are made
   4. NB: No need to tag a new version of the modified package for git; npm has already done that for us check > git tag, and we can see it's already created for us
+  5. npm publish
+  6. git push --tags --> Tag the new release in github with the associated codebase 
+  7. git push --> Push to the remote branch in this case master
+
+  # Releasin a Beta | alpha | pre-release version for the package:
+  1. Amend package.json version to the actual beta release, e.g. 1.1.0-beta.0. npm does not support automatic version change of tagged releases
+  2. npm publish --tag beta --> Will create a tagged beta version of the package in npm. This will help users identifying the experimental nature of the release,  and they can download it if they wish to try some features
+  3. git add .
+  4. git commit -m "..."
+  5. git tag 1.1.0-beta.0 --> Create the same tagged version of the beta release for git
+  6. git push
+  7. git push --tags
+  - Users who wish to install the "beta" tagged release package can just run > npm i nodejs-webapp@beta
+  - Running > npm info will display an additional tag, i.e. beta to the dist-tags alongside latest tag
