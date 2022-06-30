@@ -1,0 +1,38 @@
+{
+  "name": "nodejs-webapp",
+  "version": "1.0.0",
+  "description": "NB: \r       - Atlas connectivity is not available from the office network\r       - If we are behind a VPN, Mongo Atlas cloud is not available as well",
+  "main": "app.js",
+  "scripts": {
+    "start": "set DEBUG=app* & nodemon",
+    "debug": "set DEBUG=* & nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sofiane Zairi",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "mongodb": "^4.7.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/szairi2011/nodejs-webapp.git"
+  },
+  "keywords": [
+    "nodejs",
+    "webapp"
+  ],
+  "bugs": {
+    "url": "https://github.com/szairi2011/nodejs-webapp/issues"
+  },
+  "homepage": "https://github.com/szairi2011/nodejs-webapp#readme"
+}
