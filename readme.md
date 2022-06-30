@@ -19,13 +19,13 @@
         Check following stackoverflow post 'https://stackoverflow.com/a/19949939'
 
   # Some handy npm commands:
-  > npm list --depth 0 --> This will display 1st level of the installed dependency packages (NB: short form is ls)
-  > npm list -g --depth 0 --parseable --> Displays globally installed npm packages and shows directory path of the installed packages (We can specify --long or --json instead of --parseable)
-  > npm update --> Will install the latest versions that are cpompatible with the semantic versions in package.json
-  > NB: If we need to specify specific versions in package.json, we would need to delete package-lock.json first otherwise we won't be able to install the specified versions with > npm install command
-  > npm prune --prod --> Is a useful command to remove the dev-dependencies from the package.json when deploying to production. Removing the --prod flag will remove the orphen packages from node_modules if they are not listed in package.json
-  > npm config list --> to enlist the config properties. > npm set or > npm get are short for > npm config set | get
-  > npm repo --> will open the code repo, e.g. github, for the actual package on the a browser
+  - > npm list --depth 0 --> This will display 1st level of the installed dependency packages (NB: short form is ls)
+  - > npm list -g --depth 0 --parseable --> Displays globally installed npm packages and shows directory path of the installed packages (We can specify --long or --json instead of --parseable)
+  - > npm update --> Will install the latest versions that are cpompatible with the semantic versions in package.json
+  - > NB: If we need to specify specific versions in package.json, we would need to delete package-lock.json first otherwise we won't be able to install the specified versions with > npm install command
+  - > npm prune --prod --> Is a useful command to remove the dev-dependencies from the package.json when deploying to production. Removing the --prod flag will remove the orphen packages from node_modules if they are not listed in package.json
+  - > npm config list --> to enlist the config properties. > npm set or > npm get are short for > npm config set | get
+  - > npm repo --> will open the code repo, e.g. github, for the actual package on the a browser
 
   # Publishing own package to npm and to github repo:
   1. npm adduser --> this will add the npmjs user account, so that npm can authenticate when publishing own package. Got my npmjs account saved in vault
