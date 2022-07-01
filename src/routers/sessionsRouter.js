@@ -33,10 +33,10 @@ sessionsRouter.get('/', async (req, res) => {
     // debug('Returned sessions collection object', collection);
     sessions = await collection.find().toArray();
     debug(`Found ${sessions.length} sessions in Mongo DB`);
-    /* res.render('sessions', {
+    res.render('sessions', {
       sessions: sessions
-    }); */
-    res.json(sessions);;
+    });
+    // res.json(sessions);;
   }
   catch(error) {
     debug(error);

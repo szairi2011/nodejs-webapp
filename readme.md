@@ -18,12 +18,13 @@
     - No, we do not need to close connections to DB - your only connection is via MongoClient and as the documentation states - it handles connection pooling for you.
         Check following stackoverflow post 'https://stackoverflow.com/a/19949939'
 
+## Pluralsight material :: Course :: "Working with NPM 4"
   # Some handy npm commands:
   - > npm list --depth 0 --> This will display 1st level of the installed dependency packages (NB: short form is ls)
   - > npm list -g --depth 0 --parseable --> Displays globally installed npm packages and shows directory path of the installed packages (We can specify --long or --json instead of --parseable)
   - > npm update --> Will install the latest versions that are cpompatible with the semantic versions in package.json
   - > NB: If we need to specify specific versions in package.json, we would need to delete package-lock.json first otherwise we won't be able to install the specified versions with > npm install command
-  - > npm prune --prod --> Is a useful command to remove the dev-dependencies from the package.json when deploying to production. Removing the --prod flag will remove the orphen packages from node_modules if they are not listed in package.json
+  - > npm prune --prod --> Is a useful command to remove the dev-dependencies from the package.json when deploying to production. Removing the --prod flag will instead remove the orphen packages from node_modules if they are not listed in package.json; this will keep our node_modules clean and in line with the package.json manifest. Hint: This command could be run for instance when building a prod Docker image where no dev tools will be required afterwards.
   - > npm config list --> to enlist the config properties. > npm set or > npm get are short for > npm config set | get
   - > npm repo --> will open the code repo, e.g. github, for the actual package on the a browser
 
@@ -48,7 +49,7 @@
   6. git push --tags --> Tag the new release in github with the associated codebase 
   7. git push --> Push to the remote branch in this case master
 
-  # Releasin a Beta | alpha | pre-release version for the package:
+  # Release a Beta | alpha | pre-release version for the package:
   1. Amend package.json version to the actual beta release, e.g. 1.1.0-beta.0. npm does not support automatic version change of tagged releases
   2. npm publish --tag beta --> Will create a tagged beta version of the package in npm. This will help users identifying the experimental nature of the release,  and they can download it if they wish to try some features
   3. git add .
@@ -57,4 +58,27 @@
   6. git push
   7. git push --tags
   - Users who wish to install the "beta" tagged release package can just run > npm i nodejs-webapp@beta
-  - Running > npm info will display an additional tag, i.e. beta to the dist-tags alongside latest tag
+  - npm info will display an additional tag, i.e. beta to the dist-tags alongside latest tag
+
+  ## Pluralsight material :: Course :: "Eliminating Security vulnerabilities with NPM 6 Audit"
+  # Identify vulnerabilities:
+  NPM offers a way to identify and/or fix security vulnerabilities in the dependency packages with the audit command:
+  - > npm audit --> Will print all identified vulnerabilities in dependency modules as per community reported issues, and know patterns. NB: npm audit will not identify security vulnerabilities in our own project code; there are other npm tools that could do that for us
+  - > npm audit | awk '/High/ {print $0}' --> This works on Linux and we need to get familiar to print the level of detail we need; in this we only print High reported vulnerabilities
+  - > npm audit --json > file_to_be_processed.json --> THis would be handy to use visualization tools that could parse the json file and show case vulnerabilities using build in filters such number of high or critical ones, etc
+  - > npm audit --dev | --prod --> --dev flag will display only dev-dependencies based vulnerabilities, and --prod will only report the actual dependencies of the project. This could be a very handy feature, when combined with npm prune --prod command, to keep only the prod packages in a customer facing deployment and fix only the prod related vulnerabilities for the project
+
+  # Fix identified vulnerabilities using npm:
+  - > npm audit fix --> This will fix the promised fixable issues by updating package.json, package-lock.json, remove vulnebale modules, and install the safe ones all of that in one command
+  - > npm audit fix --only=dev | prod --> This will only fix dev-dependencies or prod relatd vulnerabilities
+  - > npm audit fix --force -->  This will allow npm to bypass the semver compatibility while fixing vulnerabilities, so that we don't have to install sepecific version manually, and instead let npm decide what the best fix guess for us. 
+
+  # Fix identified vulnerabilities manually:
+  - At some point if the project is a bit complex in term of dependencies, and after going through > npm audi fix, npm audit may instruct us to perform manual fixing. In this case, deleting package-lock.json (and perhaps > rm -rf node_modules) and reinstall with > npm install may download newer packages while honoring package.json semver definitions and this could fix many vulnerabilities especially for those projects that did not undergo upgrades for a while ...
+  - With the help of > npm audit to identify vulnerable packages and > npm info <name_of_vulnerable_packege> to identify the latest version, we may update package.json manually and then reinstall again
+  - If the latest version are only for minor or patch versions, we may add ^ to the version, e.g. ^4.8.0, and that will allow npm to install the latest non breaking versions (Only valid if the owners of the packages are following the semver conventions)
+  - We can also report issues and vulnerabilities on github repo of the actual package dependency; hoping that they will be addressed by the owner at some point
+  - Alternatively we can also fork the project from github, we then fix the issues locally, and send a pull request (PR) to the owner/maintainers of the project and let them decide if they wish to accept the fixes we have made
+  - But if filing an issue or sending a PR is not going to help (e.g. if the project is not going to be maintained anymore), then we may need to fork and publish a fixed version ourselves instead
+  - An easier alternative is to look for a different package that provides similar features that is vulnerabilities free and that is still maintained ...
+
